@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block link %}{{url_for('static',filename='css/dashboard.css')}}{% endblock link %}
+
+
+
+
+
+
+
+{% block main %}
+{% block navbar %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top container">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{{url_for('index')}}">DATA MONITOR</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{{url_for('help')}}">Help</a></li>
+				<li><a href="{{url_for('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+
+		</div>
+	</div>
+</nav>
+
+{% endblock navbar %}
+
+{% block sidebar %}
+{% endblock sidebar %}
+
+{% block content %}
+<div class="container bg-info tall">
+	<h2 class="text-center"> Settings </h2>
+	<form action="{{url_for('settings')}}" method="post">
+		<div class="form-group">
+			<div class="">
+				<h3> For table </h3>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="hum">
+						Humidity
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="abs_hum">
+						Absolute humidity
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="temp">
+						Temperature
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="press">
+						Atmospheric pressure(Pa)
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="press_Hg">
+						Atmopheric pressure(mm Hg)
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="table" value="dust">
+						Dust
+					</label>
+				</div>
+			</div>
+			<div class="">
+				<h3> For graphs</h3>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="graphs" value="h_and_t_plot">
+						Humidity and temperature
+					</label>
+				</div>
+
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="graphs" value="press_plot">
+						Atmospheric pressure(Pa)
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="graphs" value="dust_plot">
+						Dust
+					</label>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+</div>
+
+{% endblock content %}
+{% endblock main %}

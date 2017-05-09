@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Roman Shuliar">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Parameters of microclimate</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../static/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    
+      <link href={% block link %}{% endblock link %} rel="stylesheet"> 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <script src="../static/js/handlebars-v4.0.5.js"></script>
+       {{ JSGlue.include() }}
+       <!-- using handlebars for rendering tables in analytics -->
+       <script id="entry-template" type="text/x-handlebars-template">
+       {% raw %}
+         <table class="table table-bordered table-responsive table-condensed">
+          <tr class="active">
+            <th>number of measurements:</th>
+            <td>{{firsttable.nmeas}}</td>
+          </tr>
+          <tr class="bga">
+            <td>date range:</td>
+            <td> <b>from</b> {{firsttable.dr.from}} <b>to</b> {{firsttable.dr.to}}</td>
+          </tr>
+          <tr class="active">
+            <th> selected number of measurements:</th>
+            <td>{{firsttable.selnmeas}}</td>
+          </tr>
+          <tr class="bga">
+            <td>date range:</td>
+            <td><b>from</b> {{firsttable.sdr.from}} <b>to</b> {{firsttable.sdr.to}}</td>
+          </tr>
+        </table>
+        <table class="table table-bordered table-responsive">
+          <tr>
+            <th>PARAMETER</th>
+            <th>MAX</th>
+            <th>MIN</th>
+            <th>MEAN</th>
+            <th>DEVIATION</th>
+          </tr>
+          {{#each secondtable}}
+          <tr class="active">
+            <th>{{@key}}</th>
+            <td>{{this.max}}</td>
+            <td>{{this.min}}</td>
+            <td>{{this.mean}}</td>
+            <td>{{this.dev}}</td>
+          </tr>
+          <tr class="bga">
+            <th></th>
+            <td>{{this.maxdate}}</td>
+            <td>{{this.mindate}}</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          {{/each}}
+        </table>
+      {% endraw %}
+      </script>
+  </head>
+
+  <body class="{% block background %}{% endblock background %}">
+
+    {% block navbar %}{% endblock navbar %}
+    <!-- block for messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+          <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{message}}
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+     <!-- end block for messages -->      
+    {% block main %}
+    <div class="container-fluid" >
+        <div class="row" >
+            {% block sidebar %}{% endblock sidebar %}
+
+            {% block content %}
+            
+            {% endblock content %}
+  
+        </div>
+    </div>
+    {% endblock main %}
+    
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../static/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../static/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="../static/js/myjs.js"></script>
+</body>
+</html>

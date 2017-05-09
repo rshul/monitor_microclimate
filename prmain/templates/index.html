@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block link %}{{url_for('static',filename='css/dashboard.css')}}{% endblock link %}
+<!-- navigation bar -->
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{{url_for('index')}}">DATA MONITOR</a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+
+				<li><a href="{{url_for('settings')}}">Settings</a></li>
+				
+				<li><a href="{{url_for('help')}}">Help</a></li>
+				<li><a href="{{url_for('logout')}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+			</ul>
+
+		</div>
+	</div>
+</nav>
+{% endblock navbar %}
+<!-- end navigation bar -->
+<!-- side panel -->
+{% block sidebar %}
+<div class="col-sm-3 col-md-2 sidebar">
+	<ul class="nav nav-sidebar">
+		<li class="ch"><a href="{{url_for('graph')}}">Graphs <span class="sr-only">(current)</span></a></li>
+
+		<li class="ch"><a role="button" class="link" data-toggle="modal" href="#myModal"> Analytics </a></li>
+		
+		<li class="ch"><a role="button" class="link" data-toggle="collapse" href="#collapseExample" aria-expaned="false", aria-controls="collapseExample" >Select date</a></li>
+		<li class="ch"><a href="{{url_for('get_csv')}}">Export</a></li>
+	</ul>
+</div>
+{% endblock sidebar %}
+<!-- end side panel -->
+{% block content %}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ">
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Analytics</h4>
+      </div>
+      <div class="modal-body">
+      <div  id="analytics">
+      	<!--place for table returned by serever -->
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- collapse filter -->
+	<div class="collapse" id="collapseExample">	
+	<div>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero aperiam mollitia voluptatibus, illum porro ab, molestiae obcaecati, voluptas rerum ex tenetur inventore expedita cum quae accusantium cupiditate, quidem corporis beatae?</p>
+	<form action="{{url_for('index')}}" class="form-inline" method="post">
+		<div class="form-group">
+		<label for="fromdate">From date</label>
+			<input type="text" class="form-control" name="fromdate" placeholder="dd/mm/yy">
+		</div>
+		<div class="form-group">
+			<label for="todate">To date</label>
+			<input type="text" class="form-control" name="todate" placeholder="dd/mm/yy">
+		</div>
+		<div class="checkbox">
+					<label>
+						<input type="checkbox" name="default" value="set">
+						Set default
+					</label>
+				</div>
+		<button type="submit" class="btn btn-default">OK</button>
+	</form>
+	</div>
+	</div>
+<!-- end collapse filter -->	
+
+<!-- table of data -->
+	
+	<h2 class="sub-header text-center"> Table of sensor data </h2>
+	
+	<div class="table-responsive">
+	
+		<table class="table table-condensed table-hover">
+			<!-- head for table -->
+			<thead class="bg-my">
+				<tr class="my">
+					<th > &num;num&ensp; &ensp; </th>
+					{% if settings.hum == True %}
+					<th > Humidity, % </th>
+					{% endif %}
+					{% if settings.abs_hum == True %}
+					<th> Absolute humidity, g/m3 </th>
+					{% endif %}
+					{% if settings.temp == True %}
+					<th> Temperature, dec C </th>
+					{% endif %}
+					{% if settings.press == True %}
+					<th> Atmospheric pressure, Pa </th>
+					{% endif %}
+					{% if settings.press_Hg == True %}
+					<th> Atm. pressure, mm Hg</th>
+					{% endif %}
+					{% if settings.dust == True %}
+					<th> Dust, mg/m3 &ensp; &ensp;</th>
+					{% endif %}
+					<th> &ensp; &ensp;Date &ensp; &ensp;&ensp;</th>
+					<th> &ensp; &ensp;Time&ensp; &ensp;&ensp;</th>
+				</tr>
+			</thead>
+			<!-- end head for table -->
+			<tbody>
+				{% if rows %}
+				{% for row in rows.items %}
+				<tr class="my">
+					<td class="bgcol"> {{ loop.index+(rows.page-1)*rows.per_page}}</td>
+					{% if settings.hum == True %}
+					<td class="bgcol">{{ row.humid }}</td>
+					{% endif %}
+					{% if settings.abs_hum == True %}
+					<td class="bgcol">{{ row.abh |round(5) }}</td>
+					{% endif %}
+					{% if settings.temp == True %}
+					<td class="bgcol">{{ row.temp1 }}</td>
+					{% endif %}
+					{% if settings.press == True %}
+					<td class="bgcol">{{ row.press }}</td>
+					{% endif %}
+					{% if settings.press_Hg == True %}
+					<td class="bgcol">{{ (row.press*0.00750062) |round | int }}</td>
+					{% endif %}
+					{% if settings.dust == True %}
+					<td class="bgcol">{{ row.dust }}</td>
+					{% endif %}
+					<td class="bgcol">{{ row.ts.date().strftime("%d.%m.%Y") }}</td>
+					<td class="bgcol">{{ row.ts.time()}}</td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+				
+			</tbody>
+		</table>
+
+	</div>
+	
+	<!-- block pager -->
+	<ul class="pager">
+	{% if rows.has_prev %} <li > <a href="{{ url_for('index', page=rows.prev_num) }}" >  &lt;&lt; Newer data </a></li>
+	{% else %}
+		<li class="disabled"><a> &lt;&lt; Newer data </a></li>
+	{% endif %} 
+	{% if rows.has_next %}  <li ><a href="{{ url_for('index', page=rows.next_num) }}">Older data &gt;&gt; </a></li>
+	{% else %}
+		<li class="disabled"><a>  Older data &gt;&gt; </a></li>
+	{% endif %}
+	</ul>
+	{% if rows %}
+	<ul class="pager">
+		<li class="previous "> <a href="{{ url_for('index', page=1) }}" > first page </a></li>
+		<span class="badge badge-info "> {{ rows.page }} of {{ rows.pages}} pages </span>
+		<li class="next"> <a href="{{ url_for('index', page=rows.pages) }}" >  last page </a></li>
+	</ul>
+	{% endif %}
+	<!-- end block pager -->	
+<!-- end table of data -->
+</div>
+{% endblock content %}
+
+
+{% block main %}
+{{ super() }}
+{% endblock main %}

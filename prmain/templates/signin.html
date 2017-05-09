@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block link %}{{url_for('static',filename='css/signin.css')}}{% endblock link %}
+{% block main %}
+<div class="container">
+
+<form action="{{url_for('login')}}" class="form-signin"  method="post">
+  <h2 class="form-signin-heading">Please sign in</h2>
+  	{% if error %}
+   	<p class="alert alert-danger" role="alert"><strong>Error:</strong> {{ error }}</p>
+ 	{% endif %}
+  <label for="Email" class="sr-only">Email address</label>
+  <input type="email" name="Email" class="form-control" placeholder="Email address" required autofocus>
+  <label for="Password" class="sr-only">Password</label>
+  <input type="password" name="Password" class="form-control" placeholder="Password" required>
+
+  <button class="btn btn-lg btn-primary btn-block " type="submit">Sign in</button>
+  <a href="/register" class="btn btn-sm btn-block btn-link" role="button">Registration</a>
+  
+</form>
+
+</div> <!-- /container -->
+
+{% endblock %}
