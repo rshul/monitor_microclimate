@@ -4,7 +4,7 @@ __serial_data.py__ - program for interaction with Arduino module and saving data
 __prmain directory__ contains flask application  
 # Flask application structure:  
 * *templates and static* directories - standatd for site appearance;
-* *\_\_inti\_\_.py* - construct flask application object and configurations;
+* *\_\_inti\_\_.py* - constructing flask application object and changing configurations;
 * *ap.db* - sqlite database;
 * *helpers.py* - defining additional functions;
 * *models.py* - defining classes for databases using SQLAlchemy;
