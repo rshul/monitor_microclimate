@@ -50,7 +50,7 @@ def index(page=1):
 			rows = None
 	if rows:
 		for row in rows.items:
-			row.abh = abs_hum(row.humid, row.temp1, row.press)
+			row.abh = abs_hum(row.humid, row.temp1, row.press/100)
 	settings = User.query.get(session.get('user_id')).settings
 	return render_template('index.html', rows = rows, settings=settings)
 
