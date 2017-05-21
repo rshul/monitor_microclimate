@@ -23,7 +23,7 @@ def abs_hum(rh,t,p):
 
   fp = 1.0016 + 3.15 * 10**-6 -0.074 /p
   ew = 6.112 * math.e **(17.62*t/(243.12 + t))
-  return ew * rh / (461.5 * (t+273))
+  return ew * fp * rh / (461.5 * (t+273))
 
 def create_csv(data):
   """ creat csv"""
