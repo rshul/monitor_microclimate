@@ -1,7 +1,7 @@
 # monitor_microclimate
 
 __serial_data.py__ - program for interaction with Arduino module and saving data in data base  
-__prmain directory__ contains flask application 
+__prmain directory__ contains flask application   
 __Arduino_sketch__ - sketch for Arduino
 # Flask application structure:  
 * *templates and static* directories - standatd for site appearance;
