@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+ os.path.join(app.root_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_BINDS'] = {
 
-	'sens': 'mysql://roma:2424sdsd@127.0.0.1:3306/projectdb'
+	'sens': 'mysql://roma:********@127.0.0.1:3306/projectdb'
 }
 db = SQLAlchemy(app)
 
