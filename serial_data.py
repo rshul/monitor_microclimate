@@ -9,7 +9,7 @@ count = 0
 sumOfData = [0.0, 0.0, 0.0, 0, 0.0]
 meanval = []
 con = mysql.connector.connect(user="roma",
-                              password="2424sdsd",
+                              password="********",
                               host="127.0.0.1",
                               database="projectdb",
                               port='3306')
